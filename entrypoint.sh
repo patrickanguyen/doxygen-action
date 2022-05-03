@@ -33,7 +33,7 @@ fi
 apk add $PACKAGES
 
 # if plantuml was installed, update PLANTUML_JAR_PATH in Doxyfile
-if [[ $4 == *"plantuml"* ]]
+if [[ $4 == *"plantuml"* ]] ; then
 sed -i 's/PLANTUML_JAR_PATH\s*=.*/PLANTUML_JAR_PATH = \/usr\/share\/java\/plantuml.jar/g' $1
 fi
 
