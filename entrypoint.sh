@@ -26,13 +26,16 @@ else
   BUILD_LATEX=0
 fi
 
-PACKAGES="doxygen graphviz ttf-freefont plantuml $4"
+PACKAGES="doxygen graphviz ttf-freefont $4"
 if [ "$BUILD_LATEX" = true ] ; then
   PACKAGES="$PACKAGES perl build-base texlive-full biblatex ghostscript"
 fi
 apk add $PACKAGES
 
-echo "PLANTUML_JAR_PATH=/usr/share/java/plantuml.jar" >> $1
+# if plantuml was installed, update PLANTUML_JAR_PATH in Doxyfile
+if [[ $4 == *"plantuml"* ]]
+sed -i 's/PLANTUML_JAR_PATH\s*=.*/PLANTUML_JAR_PATH = \/usr\/share\/java\/plantuml.jar/g' $1
+fi
 
 echo "::notice::You're on the bleeding edge of doxygen-action. To pin this version use: mattnotmitt/doxygen-action@$(doxygen --version)"
 
